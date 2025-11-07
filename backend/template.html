@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prescription — Template</title>
+  <style>
+    :root{
+      --paper-bg: #ffffff;
+      --muted:#6b7280;
+      --accent:#0b5cff;
+      --box:#f4f7f6;
+      --border:#e6e9ec;
+      --paper-w: 800px;
+      --gutter:16px;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color: #111827;
+    }
+    html,body{height:100%;background:var(--box);margin:0;padding:24px;}
+    .page{width:var(--paper-w);margin:0 auto;background:var(--paper-bg);box-shadow:0 6px 18px rgba(16,24,40,0.06);border-radius:6px;overflow:hidden}
+    .sheet{padding:20px 24px}
+
+    .header{display:flex;align-items:flex-start;gap:18px;border-bottom:1px dashed var(--border);padding-bottom:12px}
+    .brand{flex:1}
+    .brand h1{margin:0;font-size:20px;letter-spacing:0.2px}
+    .brand p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+    .meta{text-align:right}
+    .meta .small{font-size:13px;color:var(--muted)}
+    .meta .pres-id{font-weight:700;margin-top:6px}
+
+    .row{display:flex;gap:18px;margin-top:18px}
+    .col{flex:1}
+    .card{background:#fff;border:1px solid var(--border);padding:12px;border-radius:6px}
+    .card h3{margin:0 0 6px;font-size:14px}
+    .kv{display:flex;gap:8px;flex-wrap:wrap}
+    .kv .item{min-width:120px}
+    .kv .label{display:block;font-size:12px;color:var(--muted)}
+    .kv .value{font-weight:600}
+
+    table.meds{width:100%;border-collapse:collapse;margin-top:18px}
+    table.meds th, table.meds td{padding:8px 10px;border:1px solid var(--border);text-align:left}
+    table.meds th{background:var(--box);font-size:13px}
+    table.meds td.small{font-size:13px;color:var(--muted)}
+
+    .footer{display:flex;justify-content:space-between;align-items:center;margin-top:18px;border-top:1px dashed var(--border);padding-top:12px}
+    .valid{font-size:13px;color:var(--muted)}
+    .doctor{ text-align:right }
+    .doctor .name{font-weight:700}
+    .doctor .reg{font-size:13px;color:var(--muted)}
+
+    @media print{
+      body{background:transparent;padding:0}
+      .page{box-shadow:none;margin:0;border-radius:0}
+    }
+    @media (max-width:880px){
+      :root{--paper-w:100%}
+      .row{flex-direction:column}
+      .meta{text-align:left}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="sheet">
+      <div class="header">
+        <div class="brand">
+          <h1>Dr. Doctor Name</h1>
+          <p>Education Qualification · Speciality<br/>Tamil Nadu Medical Council REGD. No. 00000<br/>Clinic Address and Pincode · Clinic Time Slots</p>
+        </div>
+        <div class="meta">
+          <div class="small">{{PATIENT_NAME}} · {{AGE}} yr / {{GENDER}}</div>
+          <div class="pres-id">Patient ID: <strong>{{PATIENT_ID}}</strong></div>
+          <div class="small" style="margin-top:6px">{{DATE}}</div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:14px">
+        <div class="col card">
+          <h3>Vitals</h3>
+          <div class="kv">
+            <div class="item"><span class="label">Ht</span><div class="value">{{HT}}</div></div>
+            <div class="item"><span class="label">Wt</span><div class="value">{{WT}}</div></div>
+            <div class="item"><span class="label">Temp</span><div class="value">{{TEMP}}</div></div>
+            <div class="item"><span class="label">HR</span><div class="value">{{HR}}</div></div>
+            <div class="item"><span class="label">BP</span><div class="value">{{BP}}</div></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <h3>Current Diagnosis</h3>
+            <div style="font-weight:600">{{DIAGNOSIS}}</div>
+            <div style="margin-top:8px;font-size:13px;color:var(--muted)">{{KNOWN_DX}}</div>
+          </div>
+        </div>
+
+        <div class="col card">
+          <h3>Instructions & Notes</h3>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--muted)">{{INSTRUCTIONS}}</p>
+
+          <div style="margin-top:10px">
+            <h3>Notes</h3>
+            <p style="font-size:13px;color:#333;margin:6px 0 0;white-space:pre-wrap">{{NOTES}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagnosis">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">Medications</h3>
+          <div class="valid">Valid till: <strong>{{VALID_TILL}}</strong></div>
+        </div>
+
+        <table class="meds" aria-label="medication-list">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Medicine</th>
+              <th>Composition</th>
+              <th>Frequency</th>
+              <th>Timing</th>
+              <th>Duration</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{MEDICATION_ROWS}}
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="footer">
+        <div class="valid">Doctor generated this prescription, and issued digitally</div>
+        <div class="doctor">
+          <div class="name">Dr. Doctor Name</div>
+          <div class="reg">Tamil Nadu Medical Council REGD. No. 00000</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
